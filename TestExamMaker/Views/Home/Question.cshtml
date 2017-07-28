@@ -1,0 +1,105 @@
+﻿@model IList<TestExamMaker.Models.QuestionAnswer>
+@using TestExamMaker.Models
+@{
+  var q = (Question)ViewBag.Question;
+
+}
+<div class="container">
+  <div class="row row-eq-height">
+
+    <div class="col-md-6">
+      <h2><small>Question #@q.Order: </small></h2>
+    </div>
+
+    <div class="col-md-6 text-right">
+      <h5>
+          Time left : <span id="clock">clock</span>
+        </h5>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <h3>@q.Title</h3>
+    </div>
+  </div>
+
+      @using (Html.BeginForm("Question", "Home", new { @order = q.Order + 1 })) {
+    @Html.Hidden("QID", q.ID.ToString())
+        @Html.Hidden("MultipleAnswers", q.MultipleAnswers.ToString())
+
+        <table class="table">
+          <tr>
+            <th>
+              Answer
+            </th>
+            <th>
+
+            </th>
+
+            <th></th>
+          </tr>
+
+          @foreach (var item in Model) {
+        <tr>
+          <td>
+            @if (q.MultipleAnswers) {
+
+            @*@Html.CheckBoxFor(modelItem => item.Answer)*@
+              @*@Html.CheckBox("Answers", false); *@
+
+              <input type="checkbox" name="Answers" value="@item.DisplayOrder" />
+
+              } else {
+              @*@Html.RadioButtonFor(modelItem => item.DisplayOrder, item.DisplayOrder, new { name="grp",@checked=""})*@
+              @Html.RadioButton("radioGrp", item.DisplayOrder)
+              }
+          </td>
+          <td>
+            @Html.DisplayFor(modelItem => item.AnswerChoice)
+          </td>
+
+          <td></td>
+        </tr>
+            }
+        </table>
+
+        <div class="row">
+
+          <div class="col-md-6">
+            <input type="button" value="Back" onclick="window.history.back();" class="btn btn-warning btn-lg" />
+          </div>
+
+          <div class="col-md-6 bottom-column text-right">
+            <input type="submit" value="Next" class="btn btn-success btn-lg" />
+          </div>
+        </div>
+        }
+
+      <p>
+        @*<a href="@Url.Action("Question", "Home",new {   @order = 1 })" class="btn btn-success btn-lg">
+          Next
+        </a>*@
+
+      </p>
+    </div>
+
+@section Scripts
+{
+  <script type="text/javascript">
+    $(document).ready(function () {
+
+      var testStart = $.cookie("timer");
+      //testStart = '7/28/2017 16:00';
+
+      
+
+      $('#clock').countdown(testStart, function (event) {
+        $(this).html(event.strftime('%M:%S'));
+      }).on('finish.countdown', function () {
+        window.location.href = "/home/result";
+      });
+            
+    });
+  </script>
+}

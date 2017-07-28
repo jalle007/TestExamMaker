@@ -1,0 +1,25 @@
+﻿   <div class="jumbotron">
+  <h2>Results</h2>
+
+     @if (ViewBag.passed) {
+      <p style="color:blue">
+        Congratulations ! you passed the exam.
+      </p>
+       } else {
+      <p style="color:red">
+        Unfortunatelly you did not pass the exam.
+      </p>
+       }
+
+     <p>
+       Your exam score is @ViewBag.Score / @ViewBag.Count
+     </p>
+
+  <p>
+    @*<a href="@Url.Action("Question", "Home",new {   @order = 1 })" class="btn btn-success btn-lg">
+        Next
+      </a>*@
+
+  </p>
+</div>
+@*Time  <h3><small>Exam duration: @ViewBag.Duration minutes.</small></h3>*@

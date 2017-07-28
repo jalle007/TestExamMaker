@@ -22,3 +22,15 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.bottom-column {
+  float: right;
+  vertical-align: bottom;
+}
+
+.row-eq-height {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
